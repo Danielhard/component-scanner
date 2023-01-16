@@ -1,0 +1,64 @@
+{
+  "name": "component-scanner",
+  "version": "1.0.0",
+  "description": "Simple, fast web system component scanner, support vue, react, jsx, tsx, html, pug and so on, help counting component usage.",
+  "author": "秦旭洋 <emosheeep@qq.com>",
+  "type": "module",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emosheeep/component-scanner"
+  },
+  "bugs": {
+    "url": "https://github.com/emosheeep/component-scanner"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "keywords": [
+    "ast",
+    "vue",
+    "react",
+    "html",
+    "pug",
+    "web",
+    "jsx",
+    "tsx",
+    "javascript",
+    "ecmascript"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "prepublishOnly": "npm run build",
+    "dev": "tsup --watch",
+    "build": "tsup && eslint . --ext .js,.ts",
+    "lint": "eslint . --fix --ext .js,.ts"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.2.45",
+    "change-case": "^4.1.2",
+    "html-parser": "^0.11.0",
+    "listr2": "^5.0.6",
+    "pug-lexer": "^5.0.1",
+    "pug-parser": "^6.0.0",
+    "pug-walk": "^2.0.0",
+    "typescript": "^4.9.4",
+    "zx": "^7.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.32.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-define-config": "^1.14.0",
+    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
+    "tsup": "^6.5.0"
+  }
+}
