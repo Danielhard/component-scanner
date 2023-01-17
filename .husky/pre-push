@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo Running pre-commit hook...
+echo Running pre-push hook...
 npx eslint . --ext .js,.ts
 npx tsc --noEmit
 echo No problems were found.

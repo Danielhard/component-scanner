@@ -1,6 +1,6 @@
 {
   "name": "component-scanner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cross-framework and simple web system component scanner, support vue(html, pug template), react, jsx, tsx, help counting component usage.",
   "author": "秦旭洋 <emosheeep@qq.com>",
   "type": "module",

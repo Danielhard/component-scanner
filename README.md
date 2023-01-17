@@ -4,9 +4,7 @@
   <a href="https://npmjs.com/package/component-scanner">
     <img src="https://img.shields.io/npm/v/component-scanner" alt="npm package">
   </a>
-  <img src="https://img.shields.io/npm/dt/component-scanner" alt="npm downloads">
   <img src="https://img.shields.io/npm/l/component-scanner" alt="npm license">
-  <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/component-scanner">
   <a href="https://github.com/emosheeep/component-scanner/actions/workflows/npm-publish.yml">
     <img src="https://github.com/emosheeep/component-scanner/actions/workflows/npm-publish.yml/badge.svg" alt="workflow status">
   </a>

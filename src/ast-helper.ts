@@ -24,15 +24,6 @@ export interface Visitor {
   onImport(value: ImportParam): void;
 }
 
-function filterIndent(content: string) {
-  const lines = content.split('\n').filter(Boolean);
-  // Calculate the minimum number of null characters
-  const min = Math.min(...lines.map(v => /^\s*/.exec(v)?.[0].length || 0));
-  return min > 0
-    ? `\n${lines.map(v => v.slice(min)).join('\n')}\n`
-    : content;
-}
-
 export function walkVueFile(filename: string, visitor: Visitor) {
   const { descriptor: result } = sfc.parse(fs.readFileSync(filename, 'utf-8'));
   const { template, script, scriptSetup } = result;
@@ -46,7 +37,7 @@ export function walkVueFile(filename: string, visitor: Visitor) {
   if (template) {
     if (template.lang === 'pug') {
       pugWalk(
-        pugParser(pugLexer(filterIndent(template.content))),
+        pugParser(pugLexer(`__wrapper_container__\n${template.content}`)),
         node => {
           if (node.type === 'Tag') {
             visitor.onTag?.(node.name);
