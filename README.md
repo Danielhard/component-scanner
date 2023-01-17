@@ -88,32 +88,32 @@ There's a vue file like:
 <template lang="pug">
   AButton(@click="onClick")
     a-icon
-  my-empty-box
+  empty-box
 </template>
 
 <script setup lang="tsx">
 import { message } from 'ant-design-vue';
-import { MyEmptyBox } from 'my-component-lib'
+import { MyEmptyBox as EmptyBox } from 'my-component-lib'
 import { h, defineComponent } from 'vue';
 
 const MyComponent = defineComponent({});
 const MyButton = defineComponent({});
 
-function onClick(){
+function onClick() {
   message.success({
     content: h('span', [
       h(MyButton),
       this.$createElement('div'),
       <MyComponent>
-        <MyEmptyBox />
+        <EmptyBox />
       </MyComponent>
-    ]); 
+    ]);
   })
 }
 </script>
 ```
 
-This file is only for example, we can get `message`, `my-empty-box`, `my-component`, `my-button`, `span`, `div` `a-button`, `a-icon` from the file by component analysis. And then, you can manually handle the results.
+This file is only for example, we can get `message`, `my-empty-box`, `empty-box`, `my-component`, `my-button`, `span`, `div` `a-button`, `a-icon` from the file by component analysis. And then, you can manually handle the results.
 
 # Options
 
@@ -170,7 +170,7 @@ export interface ScanOptions {
 
 # Issue
 
-We made some compatibility about vue, the detailed reasons is above. Sometimes it impacts accuracy, such as appears some unexpected components. 
+We made some compatibility about vue, the detailed reasons is above. Sometimes it impacts accuracy, probably appears some unexpected components. 
 
 But we consider that it should extract component names as much as possible. Redundant component names can be ignored by some ways, but it probably cause some exceptions if we missed some component name in regression tests.
 
