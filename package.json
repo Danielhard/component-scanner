@@ -1,7 +1,7 @@
 {
   "name": "component-scanner",
   "version": "1.0.0",
-  "description": "Simple, fast web system component scanner, support vue, react, jsx, tsx, html, pug and so on, help counting component usage.",
+  "description": "Cross-framework and simple web system component scanner, support vue(html, pug template), react, jsx, tsx, help counting component usage.",
   "author": "秦旭洋 <emosheeep@qq.com>",
   "type": "module",
   "main": "dist/index.js",
@@ -28,7 +28,9 @@
     "jsx",
     "tsx",
     "javascript",
-    "ecmascript"
+    "ecmascript",
+    "scanner",
+    "detector"
   ],
   "scripts": {
     "prepare": "husky install",

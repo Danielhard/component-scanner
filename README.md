@@ -9,9 +9,40 @@
   <img src="https://img.shields.io/bundlephobia/minzip/component-scanner" alt="package size">
 </div>
 
-Simple, fast web system component scanner, support vue, react, jsx, tsx, html, pug and so on, help counting component usage.
+Cross-framework and simple web system component scanner, support `vue`(`html`, `pug` template), `react`, `jsx`, `tsx`, help counting component usage.
+
+# Motivation
+
+This tool helps you refactor you inner business component library in company working.
+
+Generally speaking, we work in multiple projects and they may use a single same component. You probably extract the component into a inner business component library, and introduce the component from it.
+
+Someday you want to refactor whether lib building process or component logic, but you don't know where's the component used in projects, which is not good for our regression tests, especially when the lib is introduced by lots of large projects.
+
+**In this case, this tool makes significant sense**. This is the main problem this tool is designed to solve. As for the other usage, you can freely play it.
 
 # How it works
+
+By AST analysis we can almost do whatever we want, this is one of things we can do.
+
+In the most of situations we think of `html`, `pug`'s tag name, `JSXElement` 's tag name as a component name, and extract them as statistical results.
+
+But there are still some special cases that:
+
+1. `h` is a name convention that means render function in vue.
+2. `this.$createElement` expression means the same in vue.
+
+The first argument of these two function represents a component in common, especially when it is a string literal.
+
+Sometimes we also consider the named imports as a component name. If you provide library names, it will **extract the named imports from the lib as a component**.
+
+For example:
+
+```js
+import { a as b, c } from 'my-component-lib';
+```
+
+In the case above, `a` and `c` will be accepted, `b` is only an alias of `a`, which will be abandoned.
 
 # Usage
 
@@ -19,9 +50,132 @@ Simple, fast web system component scanner, support vue, react, jsx, tsx, html, p
 pnpm add component-scanner # or npm/yarn
 ```
 
+
+```js
+import { scan } from 'component-scanner';
+
+const result = await scan(); // use default options, glob and handle files under current working directory.
+
+const result = await scan({
+  namingStyle: 'kebab-case', // this decide
+  verbose: true, // whether to print log.
+  cwd: process.cwd(), // default is current working directory.
+  files: [], // specify files to handle.
+  ignore: [
+    '**/node_modules/**', // node_modules is always ignored.
+    '**/dist/**',
+    '**/output/**',
+  ]
+  // will count named imports from these lib.
+  libraryNames: [
+    'antd',
+    'antd-design-vue',
+    'my-component-lib',
+  ],
+  // manually count component by these hooks.
+  visitors: {
+    onTag: tagName => {}, // html,pug,JSXElement,h,this.$createElement
+    onImport: importInfo => {}, // fires when libraryNames are provided.
+  },
+})
+```
+
+# Example
+
+There's a vue file like:
+
+```vue
+<template lang="pug">
+  AButton(@click="onClick")
+    a-icon
+  my-empty-box
+</template>
+
+<script setup lang="tsx">
+import { message } from 'ant-design-vue';
+import { MyEmptyBox } from 'my-component-lib'
+import { h, defineComponent } from 'vue';
+
+const MyComponent = defineComponent({});
+const MyButton = defineComponent({});
+
+function onClick(){
+  message.success({
+    content: h('span', [
+      h(MyButton),
+      this.$createElement('div'),
+      <MyComponent>
+        <MyEmptyBox />
+      </MyComponent>
+    ]); 
+  })
+}
+</script>
+```
+
+This file is only for example, we can get `message`, `my-empty-box`, `my-component`, `my-button`, `span`, `div` `a-button`, `a-icon` from the file by component analysis. And then, you can manually handle the results.
+
 # Options
 
+```ts
+interface Visitor {
+  /** Handle component name from template and jsx */
+  onTag(name: string): void;
+  /** Handle import specifiers */
+  onImport(value: ImportParam): void;
+}
 
+export interface ScanOptions {
+  /**
+   * Customize visitors to get components from provided files.
+   */
+  visitors?: Visitor;
+  /**
+   * Files to handle.
+   * If don't received, it matches js,ts,jsx,tsx,vue,mjs,cjs files under current working directory.
+   */
+  files?: string[];
+  /**
+   * Base path to execute command.
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * Glob patterns to exclude from matches.
+   * `node_modules` is always ignored.
+   */
+  ignore?: string[];
+  /**
+   * Library names to filter components.
+   * Sometimes we import a component directly from a lib like:
+   * ```js
+   * import { a as b, c } from 'my-component-lib';
+   * ```
+   * If you provide library names, it will **extract the named imports from the lib as a component**.
+   * For example, in the case above, `a` and `c` will be accepted, `b` is only an alias of `a`, which will be abandoned.
+   */
+  libraryNames?: string[];
+  /**
+   * This helps formatting the extracted component names.
+   * @default 'default'
+   */
+  namingStyle?: NamingStyle;
+  /**
+   * Whether to print log.
+   * @default true
+   */
+  verbose?: boolean
+}
+```
 
+# Issue
 
+We made some compatibility about vue, the detailed reasons is above. Sometimes it impacts accuracy, such as appears some unexpected components. 
 
+But we consider that it should extract component names as much as possible. Redundant component names can be ignored by some ways, but it probably cause some exceptions if we missed some component name in regression tests.
+
+**If you have an edge case, welcome to PR or file an issue**.
+
+# License
+
+[MIT](./LICENSE) License © 2023 [秦旭洋](https://github.com/emosheeep)
