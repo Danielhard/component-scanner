@@ -5,8 +5,11 @@
     <img src="https://img.shields.io/npm/v/component-scanner" alt="npm package">
   </a>
   <img src="https://img.shields.io/npm/dt/component-scanner" alt="npm downloads">
-  <img src="https://img.shields.io/npm/l/component-scanner" alt="npm downloads">
-  <img src="https://img.shields.io/bundlephobia/minzip/component-scanner" alt="package size">
+  <img src="https://img.shields.io/npm/l/component-scanner" alt="npm license">
+  <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/component-scanner">
+  <a href="https://github.com/emosheeep/component-scanner/actions/workflows/npm-publish.yml">
+    <img src="https://github.com/emosheeep/component-scanner/actions/workflows/npm-publish.yml/badge.svg" alt="workflow status">
+  </a>
 </div>
 
 Cross-framework and simple web system component scanner, support `vue`(`html`, `pug` template), `react`, `jsx`, `tsx`, help counting component usage.
@@ -78,6 +81,15 @@ const result = await scan({
     onImport: importInfo => {}, // fires when libraryNames are provided.
   },
 })
+```
+
+## Some Utilities
+
+This tool export some utilities used inside from [zx](https://www.npmjs.com/package/zx) and [change-case](https://www.npmjs.com/package/change-case), which may help you customize your logic conveniently.
+
+```ts
+export { chalk, fs, globby, os, path } from 'zx';
+export { camelCase, pascalCase, paramCase as kebabCase } from 'change-case';
 ```
 
 # Example
@@ -170,9 +182,9 @@ export interface ScanOptions {
 
 # Issue
 
-We made some compatibility about vue, the detailed reasons is above. Sometimes it impacts accuracy, probably appears some unexpected components. 
+We made some compatibility about vue, the detailed reasons is above. **Sometimes it impacts accuracy, probably appears some unexpected components**. 
 
-But we consider that it should extract component names as much as possible. Redundant component names can be ignored by some ways, but it probably cause some exceptions if we missed some component name in regression tests.
+But we consider that **it should extract component names as much as possible**. Redundant component names can be ignored by some ways, but it probably cause some exceptions if we missed some component name in regression tests.
 
 **If you have an edge case, welcome to PR or file an issue**.
 

@@ -5,6 +5,7 @@
   "author": "秦旭洋 <emosheeep@qq.com>",
   "type": "module",
   "main": "dist/index.js",
+  "packageManager": "pnpm@7.25.0",
   "license": "MIT",
   "repository": {
     "type": "git",
