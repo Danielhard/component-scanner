@@ -83,7 +83,7 @@ function handleTag(node: ts.Node, callback: Visitor['onTag']) {
       () => ts.isIdentifier(expression) && expression.escapedText === 'h',
       // `this.$createElement` expression
       () => ts.isPropertyAccessExpression(expression) &&
-        ts.isThisTypeNode(expression.expression) &&
+        expression.expression.kind === ts.SyntaxKind.ThisKeyword &&
         ts.isIdentifier(expression.name) &&
         expression.name.escapedText === '$createElement',
     ];
