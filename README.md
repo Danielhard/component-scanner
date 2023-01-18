@@ -16,9 +16,9 @@ Cross-framework and simple web system component scanner, support `vue`(`html`, `
 
 This tool helps you refactor you inner business component library in company working.
 
-Generally speaking, we work in multiple projects and they may use a single same component. You probably extract the component into a inner business component library, and introduce the component from it.
+Generally speaking, we work in multiple projects and they may use same components. You probably extract the components into a inner business component library, and introduce them from it.
 
-Someday you want to refactor whether lib building process or component logic, but you don't know where's the component used in projects, which is not good for our regression tests, especially when the lib is introduced by lots of large projects.
+Someday you want to refactor whether lib building process or component logic, but you don't know where're the components used in projects, which is not good for our regression tests, especially when the lib is introduced by lots of large projects.
 
 **In this case, this tool makes significant sense**. This is the main problem this tool is designed to solve. As for the other usage, you can freely play it.
 
